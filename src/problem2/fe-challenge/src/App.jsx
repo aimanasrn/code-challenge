@@ -29,15 +29,36 @@ function App() {
     setToCurr(temp)
   }
 
-  const handleFromIcon = (currency) =>{
-    setFromCurrIcon(currency);
-    setFromCurr(currency)
+  const handleFromIcon = (curr, amount) =>{
+    setFromCurrIcon(curr);
+    setFromCurr(curr)
+
+    convertAmount(curr, amount)
     console.log(fromCurrIcon)
   }
   const handleToIcon = (currency) =>{
     setToCurrIcon(currency);
     setToCurr(currency)
     console.log(fromCurrIcon)
+  }
+
+  const handleFromAmount = (amount) => {
+    setFromAmount(amount)
+  }
+
+  const convertAmount = (curr, amount) => {
+    const getFromPrice = currency.find(item => item.currency === curr)
+    const amountFromInUSD = getFromPrice.price * Number(amount);
+
+    const getToPrice = currency.find(item => item.currency === toCurr)
+    const amountConvert = amountFromInUSD / getToPrice.price
+
+    setToAmount(amountConvert.toFixed(2))
+    console.log('getFromPrice', getFromPrice)
+    console.log('amountInUSD', amountFromInUSD)
+    console.log('amount', amount)
+    console.log('getToPrice', getToPrice)
+    console.log('amountConvert', toAmount)
   }
 
   
@@ -48,9 +69,9 @@ function App() {
         
         <div className='flex items-center rounded-md bg-white/5 outline p-3 relative my-2'>
           <label id="from-amount" className='absolute bottom-9 bg-gray-100 rounded rounded-xl px-2'>from</label>
-          <input id="from-amount" type='number' value={fromAmount} className='block outline-none flex-1'/>
+          <input id="from-amount" type='number' value={fromAmount} onChange={(e) => handleFromAmount(e.target.value)} className='block outline-none flex-1'/>
           <img src={`/src/tokens/${fromCurrIcon}.svg`} alt="" className='h-7 w-7' />
-          <select className='outline-none' value={fromCurr} onChange={(e) => handleFromIcon(e.target.value)}>
+          <select className='outline-none' value={fromCurr} onChange={(e) => handleFromIcon(e.target.value, fromAmount)}>
             {currency.map(item => (
               <option value={item.currency}>
                   {item.currency}
@@ -61,7 +82,7 @@ function App() {
 
         <div className='flex items-center rounded-md bg-white/5 outline p-3 relative mt-5'>
           <label id="to-amount" className='absolute bottom-9 bg-gray-100 rounded rounded-xl px-2'>to</label>
-          <input id="to-amount" type='number' className='block outline-none flex-1'/>
+          <input id="to-amount" type='number' className='block outline-none flex-1' />
           <img src={`/src/tokens/${toCurrIcon}.svg`} alt="" className='h-7 w-7' />
           <select className='outline-none' value={toCurr} onChange={(e) => handleToIcon(e.target.value)}>
             {currency.map(item => (
