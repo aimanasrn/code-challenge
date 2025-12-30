@@ -28,20 +28,20 @@ function App() {
   }, [])
 
 
-
+/*****************************************Currency*****************************************/
   const handleFromCurrency = (fromCurrency, fromAmount, toCurrency) =>{
     setFromCurr(fromCurrency)
 
     convertAmount(fromCurrency, fromAmount, toCurrency)
-    console.log(fromCurrIcon)
   }
+
   const handleToCurrency = (toCurrency, fromAmount, fromCurrency) =>{
     setToCurr(toCurrency)
 
     convertAmount(fromCurrency, fromAmount, toCurrency)
-    console.log(fromCurr, fromAmount, currency)
   }
 
+/*****************************************Amount*****************************************/
   const handleFromAmount = (fromAmount, fromCurrency, toCurrency) => {
     setFromAmount(fromAmount);
 
@@ -53,7 +53,7 @@ function App() {
 
     convertAmount(fromCurrency,fromAmount, toCurrency)
   }
-
+/*****************************************Convert Amount*****************************************/
   const convertAmount = (fromCurrency, amount, toCurrency) => {
     const getFromPrice = currency.find(item => item.currency === fromCurrency)
     const amountFromInUSD = getFromPrice.price * Number(amount);
@@ -63,18 +63,16 @@ function App() {
     setToAmount(amountConvert.toFixed(2));
   }
 
-    const handleSwap = () => {
-    const tempCurr = fromCurr;
-    setFromCurr(toCurr)
-    setToCurr(tempCurr)
+/*****************************************Handling Function*****************************************/
+  const handleSwap = () => {
+  const tempCurr = fromCurr;
+  setFromCurr(toCurr)
+  setToCurr(tempCurr)
 
-    const tempAmount = fromAmount;
-    setFromAmount(toAmount);
-    setToAmount(tempAmount);
-
-    // convertAmount(fromCurr, fromAmount, toCurr)
+  const tempAmount = fromAmount;
+  setFromAmount(toAmount);
+  setToAmount(tempAmount);
   }
-
   const handleSubmit = (e) => {
     e.preventDefault()
 
